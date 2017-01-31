@@ -60,8 +60,8 @@ export default class Game {
 			row = this.row+1;
 			this.fadeTd(row,col);
 		}
-		else if(this.step%2==0 ? event.keyCode === 90 : event.keyCode === 57)  {
-			this.makeChoose(event.keyCode);
+		else if((this.step%2==0 ? event.keyCode === 90 : event.keyCode === 57) && $(".game span").text() == "")  {
+			this.makeChoose(event.keyCode); 
 		}
 		
 		
@@ -174,7 +174,8 @@ export default class Game {
 				this.step = this.chooseSign = Math.floor(Math.random() * 2);
 				$(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
 				
-				$(".game p").html("rounds played: "+(this.firstWins+this.secondWins));
+				$(".game p").text("rounds played: "+(this.firstWins+this.secondWins));
+				$(".game span").text("Round over!");
 			}
 
 			

@@ -7,7 +7,7 @@
   padding-bottom: 15px;
 }
 
-.header h2{
+.header h2, header span{
   margin-left: 30px;
   margin-right: 30px;
 }

@@ -19,8 +19,10 @@ export default class Board {
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 			this.focusTd ++;
 		}
+
+		 
 		setTimeout(this.clear.bind(this),4000);
-		$(document).keydown(false);
+		
 
 	}
 
@@ -31,8 +33,10 @@ export default class Board {
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 			
 		}
+
+		 
 		setTimeout(this.clear.bind(this),4000);
-		$(document).keydown(false);
+		
 
 
 	}
@@ -45,9 +49,10 @@ export default class Board {
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 
 		}
-		setTimeout(this.clear.bind(this),4000);
-		$(document).keydown(false);
 
+		 
+		setTimeout(this.clear.bind(this),4000);
+		
 
 	}
 
@@ -60,8 +65,10 @@ export default class Board {
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 			i++;
 		}
+		
+		 
 		setTimeout(this.clear.bind(this),4000);
-		$(document).keydown(false);
+		
 
 
 	}
@@ -70,12 +77,11 @@ export default class Board {
 		
 		for(let i = 1; i <= this.boardSize*this.boardSize; i++){
 			$('[data-pos="' + i +'"]').removeClass('win');
-			
 			$('[data-pos="' + i +'"]').text("");
+			$(".game span").text("");
 			
 		}
-		$(document).keydown();
-
+		
 
 	}
 }

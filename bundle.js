@@ -95,7 +95,7 @@
 	            row = this.row + 1;
 	            this.fadeTd(row, col);
 	        }
-	        else if (this.step % 2 == 0 ? event.keyCode === 90 : event.keyCode === 57) {
+	        else if ((this.step % 2 == 0 ? event.keyCode === 90 : event.keyCode === 57) && $(".game span").text() == "") {
 	            this.makeChoose(event.keyCode);
 	        }
 	    };
@@ -172,7 +172,8 @@
 	                }
 	                this.step = this.chooseSign = Math.floor(Math.random() * 2);
 	                $(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
-	                $(".game p").html("rounds played: " + (this.firstWins + this.secondWins));
+	                $(".game p").text("rounds played: " + (this.firstWins + this.secondWins));
+	                $(".game span").text("Round over!");
 	            }
 	        }
 	    };
@@ -10512,7 +10513,6 @@
 	            this.focusTd++;
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
-	        $(document).keydown(false);
 	    };
 	    Board.prototype.drawCol = function (i) {
 	        for (var j = 0; j < this.boardSize; j++) {
@@ -10520,7 +10520,6 @@
 	            $('[data-pos="' + this.focusTd + '"]').addClass('win');
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
-	        $(document).keydown(false);
 	    };
 	    Board.prototype.drawLDiagonal = function () {
 	        for (var i = 0; i < this.boardSize; i++) {
@@ -10528,7 +10527,6 @@
 	            $('[data-pos="' + this.focusTd + '"]').addClass('win');
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
-	        $(document).keydown(false);
 	    };
 	    Board.prototype.drawRDiagonal = function () {
 	        for (var i = 0, j = this.boardSize - 1; j >= 0; j--) {
@@ -10537,14 +10535,13 @@
 	            i++;
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
-	        $(document).keydown(false);
 	    };
 	    Board.prototype.clear = function () {
 	        for (var i = 1; i <= this.boardSize * this.boardSize; i++) {
 	            $('[data-pos="' + i + '"]').removeClass('win');
 	            $('[data-pos="' + i + '"]').text("");
+	            $(".game span").text("");
 	        }
-	        $(document).keydown();
 	    };
 	    return Board;
 	}());
