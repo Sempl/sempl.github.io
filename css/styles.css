@@ -1,0 +1,68 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #000;
+  margin-bottom: 30px;
+
+  padding-bottom: 15px;
+}
+
+.header h2{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.header p {
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 20px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.player__symbol {
+  color: #9c29b7;
+  font-weight: 700;
+}
+
+.table {
+  margin: auto;
+}
+
+.table td {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  border: 3px solid grey;
+  
+}
+
+.onfocus {
+  background: #dddddd;
+}
+
+.win{
+  background-color: red;
+  -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+  -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+  animation-name: example;
+  animation-duration: 4s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  0%   {background-color: red;}
+  25%  {background-color: grey;}
+  50%  {background-color: red;}
+  100% {background-color: black;}
+}
+
+/* Standard syntax */
+@keyframes example {
+  0%   {background-color: red;}
+  25%  {background-color: grey;}
+  50%  {background-color: red;}
+  100% {background-color: black;}
+}
