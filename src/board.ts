@@ -20,6 +20,7 @@ export default class Board {
 			this.focusTd ++;
 		}
 		setTimeout(this.clear.bind(this),4000);
+		$(document).keydown(false);
 
 	}
 
@@ -31,6 +32,8 @@ export default class Board {
 			
 		}
 		setTimeout(this.clear.bind(this),4000);
+		$(document).keydown(false);
+
 
 	}
 
@@ -43,6 +46,8 @@ export default class Board {
 
 		}
 		setTimeout(this.clear.bind(this),4000);
+		$(document).keydown(false);
+
 
 	}
 
@@ -56,6 +61,8 @@ export default class Board {
 			i++;
 		}
 		setTimeout(this.clear.bind(this),4000);
+		$(document).keydown(false);
+
 
 	}
 
@@ -67,6 +74,8 @@ export default class Board {
 			$('[data-pos="' + i +'"]').text("");
 			
 		}
+		$(document).keydown();
+
 
 	}
 }

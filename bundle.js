@@ -59,6 +59,8 @@
 	"use strict";
 	var $ = __webpack_require__(2);
 	var checkwin_1 = __webpack_require__(3);
+	var board_1 = __webpack_require__(4);
+	var board = new board_1["default"]();
 	var Game = (function () {
 	    function Game() {
 	        this.boardSize = Math.sqrt($(".table td:last").data('pos')); //depends from quanity of <td> elem. 
@@ -149,13 +151,18 @@
 	            this.makeMatrix(true);
 	            this.step++;
 	            new checkwin_1["default"](this.matrixCheck);
-	            //checking for win combo
-	            if ($('[data-pos="' + this.focusTd + '"]').attr("class") === "onfocus win") {
+	            console.log(this.step);
+	            console.log(this.boardSize * this.boardSize + this.chooseSign);
+	            //checking for win or draw combo
+	            if ($('[data-pos="' + this.focusTd + '"]').attr("class") === "onfocus win" || this.step == this.boardSize * this.boardSize + this.chooseSign) {
 	                //clearing matrix and writing result
-	                this.step = this.chooseSign = Math.floor(Math.random() * 2);
-	                $(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
 	                this.makeMatrix(false);
-	                if (e === 90) {
+	                if (this.step == this.boardSize * this.boardSize + this.chooseSign) {
+	                    $(".player1__score").text("Draw!");
+	                    $(".player2__score").text("Draw!");
+	                    board.clear();
+	                }
+	                else if (e === 90) {
 	                    this.firstWins++;
 	                    $(".player1__score").text("Wins: " + this.firstWins);
 	                }
@@ -163,6 +170,8 @@
 	                    this.secondWins++;
 	                    $(".player2__score").text("Wins: " + this.secondWins);
 	                }
+	                this.step = this.chooseSign = Math.floor(Math.random() * 2);
+	                $(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
 	                $(".game p").html("rounds played: " + (this.firstWins + this.secondWins));
 	            }
 	        }
@@ -10503,6 +10512,7 @@
 	            this.focusTd++;
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
+	        $(document).keydown(false);
 	    };
 	    Board.prototype.drawCol = function (i) {
 	        for (var j = 0; j < this.boardSize; j++) {
@@ -10510,6 +10520,7 @@
 	            $('[data-pos="' + this.focusTd + '"]').addClass('win');
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
+	        $(document).keydown(false);
 	    };
 	    Board.prototype.drawLDiagonal = function () {
 	        for (var i = 0; i < this.boardSize; i++) {
@@ -10517,6 +10528,7 @@
 	            $('[data-pos="' + this.focusTd + '"]').addClass('win');
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
+	        $(document).keydown(false);
 	    };
 	    Board.prototype.drawRDiagonal = function () {
 	        for (var i = 0, j = this.boardSize - 1; j >= 0; j--) {
@@ -10525,12 +10537,14 @@
 	            i++;
 	        }
 	        setTimeout(this.clear.bind(this), 4000);
+	        $(document).keydown(false);
 	    };
 	    Board.prototype.clear = function () {
 	        for (var i = 1; i <= this.boardSize * this.boardSize; i++) {
 	            $('[data-pos="' + i + '"]').removeClass('win');
 	            $('[data-pos="' + i + '"]').text("");
 	        }
+	        $(document).keydown();
 	    };
 	    return Board;
 	}());

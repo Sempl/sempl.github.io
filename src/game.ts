@@ -1,5 +1,8 @@
 import $ = require('jquery');
 import CheckWin  from './checkwin';
+import Board from './board';
+
+let board = new Board();
 
 
 export default class Game {
@@ -57,7 +60,7 @@ export default class Game {
 			row = this.row+1;
 			this.fadeTd(row,col);
 		}
-		else if(this.step%2==0 ? event.keyCode === 90 : event.keyCode === 57) {
+		else if(this.step%2==0 ? event.keyCode === 90 : event.keyCode === 57)  {
 			this.makeChoose(event.keyCode);
 		}
 		
@@ -141,18 +144,23 @@ export default class Game {
 			this.makeMatrix(true);
 			this.step++;
 
+
 			new CheckWin(this.matrixCheck);
-			
-			//checking for win combo
-			if($('[data-pos="' + this.focusTd +'"]').attr("class") === "onfocus win") {
+			console.log(this.step);
+			console.log(this.boardSize*this.boardSize+this.chooseSign);
+			//checking for win or draw combo
+			if($('[data-pos="' + this.focusTd +'"]').attr("class") === "onfocus win" || this.step==this.boardSize*this.boardSize+this.chooseSign) {
 				
 				//clearing matrix and writing result
-				this.step = this.chooseSign = Math.floor(Math.random() * 2);
-				$(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
 				
 				this.makeMatrix(false);
 				
-				if(e===90){
+				if(this.step==this.boardSize*this.boardSize+this.chooseSign){
+					$(".player1__score").text("Draw!");
+					$(".player2__score").text("Draw!");
+					board.clear();
+				}
+				else if(e===90){
 					
 					this.firstWins++;
 					$(".player1__score").text("Wins: " +this.firstWins);
@@ -163,6 +171,8 @@ export default class Game {
 					this.secondWins++;
 					$(".player2__score").text("Wins: " +this.secondWins);
 				}
+				this.step = this.chooseSign = Math.floor(Math.random() * 2);
+				$(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
 				
 				$(".game p").html("rounds played: "+(this.firstWins+this.secondWins));
 			}
