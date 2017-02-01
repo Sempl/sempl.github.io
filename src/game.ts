@@ -4,7 +4,6 @@ import Board from './board';
 
 let board = new Board();
 
-
 export default class Game {
 	
 	boardSize : number;
@@ -17,6 +16,7 @@ export default class Game {
 	firstWins : number;
 	secondWins : number;
 	chooseSign : number;
+	rounds : number;
 
 	constructor() {
 		
@@ -31,14 +31,16 @@ export default class Game {
 		this.step = this.chooseSign =  Math.floor(Math.random() * 2);
 		$('.game h2').text(this.step == 0 ? "First player starts" : "Second player starts");
 		this.firstWins = this.secondWins = 0;
+		this.rounds = this.firstWins+this.secondWins;
 
 		$(document).keydown(this.selectPos.bind(this));
 		
 	}
 
-
-
 	selectPos(event : KeyboardEvent){
+
+		$(".player1__score").text("Wins: " +this.firstWins);
+		$(".player2__score").text("Wins: " +this.secondWins);
 		
 		let row : number = this.row;
 		let col : number = this.col;
@@ -63,33 +65,7 @@ export default class Game {
 		else if((this.step%2==0 ? event.keyCode === 90 : event.keyCode === 57) && $(".game span").text() == "")  {
 			this.makeChoose(event.keyCode); 
 		}
-		
-		
-		
-		
-	}
-
-	// rendering array to matrix , false for making "clear matrix"
-	makeMatrix(e:boolean){
-		
-		let k : number = 0;
-
-		for(let i = 0; i<this.boardSize; i++){
-			this.matrixCheck[i] = [i];
-
-			for(let j = 0; j<this.boardSize; j++)
-			{
-				if(e) {
-				
-					this.matrixCheck[i][j] = this.arrayTd[k].innerHTML;
-				 	k++
-				}
-				else{
-				
-				 	this.matrixCheck[i][j] = "";
-				}				 
-			}
-		}	
+						
 	}
 
 	// change css properties of choosed <td> elem
@@ -97,7 +73,6 @@ export default class Game {
 				
 		let oldFocus = this.focusTd;
 		
-
 		if(row<this.boardSize && col<this.boardSize && row>=0 && col>=0) {
 			
 			this.focusTd = this.boardSize*(row+1) - (this.boardSize-(col+1));
@@ -125,13 +100,35 @@ export default class Game {
 			$('[data-pos="' + this.focusTd +'"]').addClass('onfocus');
 		}
 		
-
 	}
 
+	// rendering array to matrix , false for making "clear matrix"
+	makeMatrix(e:boolean){
+		
+		let k : number = 0;
+
+		for(let i = 0; i<this.boardSize; i++){
+			this.matrixCheck[i] = [i];
+
+			for(let j = 0; j<this.boardSize; j++)
+			{
+				if(e) {
+				
+					this.matrixCheck[i][j] = this.arrayTd[k].innerHTML;
+				 	k++
+				}
+				else{
+				
+				 	this.matrixCheck[i][j] = "";
+				}				 
+			}
+		}	
+	}
+	
 	makeChoose(e : number){
 
 		if (this.matrixCheck[this.row][this.col] === ""){
-
+			
 			if((e === 57 && this.chooseSign%2 !== 0)||(e === 90 && this.chooseSign%2 ==0)) {
 
 				$('[data-pos="' + this.focusTd +'"]').text('x');
@@ -144,37 +141,40 @@ export default class Game {
 			this.makeMatrix(true);
 			this.step++;
 
-
 			new CheckWin(this.matrixCheck);
-			console.log(this.step);
-			console.log(this.boardSize*this.boardSize+this.chooseSign);
+
+			let c1 : string = $('[data-pos="' + this.focusTd +'"]').attr("class");
+			let c2 : number = this.boardSize*this.boardSize+this.chooseSign;
+		
 			//checking for win or draw combo
-			if($('[data-pos="' + this.focusTd +'"]').attr("class") === "onfocus win" || this.step==this.boardSize*this.boardSize+this.chooseSign) {
+			if( c1 === "onfocus win" || this.step== c2) {
 				
 				//clearing matrix and writing result
 				
 				this.makeMatrix(false);
 				
-				if(this.step==this.boardSize*this.boardSize+this.chooseSign){
+				if(this.step==c2 && c1 !== "onfocus win" ){
+					
 					$(".player1__score").text("Draw!");
 					$(".player2__score").text("Draw!");
-					board.clear();
+					this.rounds++;
+					setTimeout(board.clear.bind(this), 2000);
 				}
 				else if(e===90){
 					
 					this.firstWins++;
-					$(".player1__score").text("Wins: " +this.firstWins);
-
+					
 				}
 				else if(e === 57) {
 					
 					this.secondWins++;
-					$(".player2__score").text("Wins: " +this.secondWins);
+					
 				}
+			
 				this.step = this.chooseSign = Math.floor(Math.random() * 2);
 				$(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
 				
-				$(".game p").text("rounds played: "+(this.firstWins+this.secondWins));
+				$(".game p").text("rounds played: "+this.rounds);
 				$(".game span").text("Round over!");
 			}
 

@@ -19,11 +19,9 @@ export default class Board {
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 			this.focusTd ++;
 		}
-
 		 
 		setTimeout(this.clear.bind(this),4000);
 		
-
 	}
 
 	drawCol(i : number){
@@ -33,11 +31,8 @@ export default class Board {
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 			
 		}
-
 		 
 		setTimeout(this.clear.bind(this),4000);
-		
-
 
 	}
 
@@ -47,12 +42,9 @@ export default class Board {
 
 			this.focusTd = this.boardSize*(i+1)-(this.boardSize - (i+1)) ;
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
-
 		}
-
 		 
 		setTimeout(this.clear.bind(this),4000);
-		
 
 	}
 
@@ -64,24 +56,21 @@ export default class Board {
 			
 			$('[data-pos="' + this.focusTd +'"]').addClass('win');
 			i++;
-		}
-		
+		}		
 		 
 		setTimeout(this.clear.bind(this),4000);
-		
-
 
 	}
 
 	clear(){
 		
 		for(let i = 1; i <= this.boardSize*this.boardSize; i++){
+			
 			$('[data-pos="' + i +'"]').removeClass('win');
 			$('[data-pos="' + i +'"]').text("");
-			$(".game span").text("");
-			
 		}
 		
+		$(".game span").text("");		
 
 	}
 }

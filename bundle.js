@@ -74,9 +74,12 @@
 	        this.step = this.chooseSign = Math.floor(Math.random() * 2);
 	        $('.game h2').text(this.step == 0 ? "First player starts" : "Second player starts");
 	        this.firstWins = this.secondWins = 0;
+	        this.rounds = this.firstWins + this.secondWins;
 	        $(document).keydown(this.selectPos.bind(this));
 	    }
 	    Game.prototype.selectPos = function (event) {
+	        $(".player1__score").text("Wins: " + this.firstWins);
+	        $(".player2__score").text("Wins: " + this.secondWins);
 	        var row = this.row;
 	        var col = this.col;
 	        if (this.step % 2 == 0 ? event.keyCode === 87 : event.keyCode === 38) {
@@ -151,28 +154,27 @@
 	            this.makeMatrix(true);
 	            this.step++;
 	            new checkwin_1["default"](this.matrixCheck);
-	            console.log(this.step);
-	            console.log(this.boardSize * this.boardSize + this.chooseSign);
+	            var c1 = $('[data-pos="' + this.focusTd + '"]').attr("class");
+	            var c2 = this.boardSize * this.boardSize + this.chooseSign;
 	            //checking for win or draw combo
-	            if ($('[data-pos="' + this.focusTd + '"]').attr("class") === "onfocus win" || this.step == this.boardSize * this.boardSize + this.chooseSign) {
+	            if (c1 === "onfocus win" || this.step == c2) {
 	                //clearing matrix and writing result
 	                this.makeMatrix(false);
-	                if (this.step == this.boardSize * this.boardSize + this.chooseSign) {
+	                if (this.step == c2 && c1 !== "onfocus win") {
 	                    $(".player1__score").text("Draw!");
 	                    $(".player2__score").text("Draw!");
-	                    board.clear();
+	                    this.rounds++;
+	                    setTimeout(board.clear.bind(this), 2000);
 	                }
 	                else if (e === 90) {
 	                    this.firstWins++;
-	                    $(".player1__score").text("Wins: " + this.firstWins);
 	                }
 	                else if (e === 57) {
 	                    this.secondWins++;
-	                    $(".player2__score").text("Wins: " + this.secondWins);
 	                }
 	                this.step = this.chooseSign = Math.floor(Math.random() * 2);
 	                $(".game h2").text(this.step == 0 ? "First player starts" : "Second player starts");
-	                $(".game p").text("rounds played: " + (this.firstWins + this.secondWins));
+	                $(".game p").text("rounds played: " + this.rounds);
 	                $(".game span").text("Round over!");
 	            }
 	        }
@@ -10540,8 +10542,8 @@
 	        for (var i = 1; i <= this.boardSize * this.boardSize; i++) {
 	            $('[data-pos="' + i + '"]').removeClass('win');
 	            $('[data-pos="' + i + '"]').text("");
-	            $(".game span").text("");
 	        }
+	        $(".game span").text("");
 	    };
 	    return Board;
 	}());

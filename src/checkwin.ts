@@ -17,8 +17,6 @@ export default class CheckWin {
 		this.round = 1;
 		this.boardSize = Math.sqrt($(".table td:last").data('pos'));
 		this.checkRow();
-
-
 	}
 
 	checkRow() {
@@ -66,18 +64,21 @@ export default class CheckWin {
 				
 			}	
 		}
+
 		this.checkLDiagonal();
 	}
 
 	checkLDiagonal(){
 
 		this.matchCount=0;
+
 		for (let i =1; i<this.boardSize; i++){
+
 			if(this.matrixCheck[i-1][i-1] !== "" && this.matrixCheck[i][i] === this.matrixCheck[i-1][i-1]) {
-				this.matchCount++;
-				
+				this.matchCount++;				
 			}
-		}	
+		}
+
 		if(this.matchCount === this.boardSize -1 ) {
 				
 				this.round ++;
@@ -90,12 +91,15 @@ export default class CheckWin {
 }
 
 	checkRDiagonal(){
+
 		this.matchCount=0;
+
 		for (let j = this.boardSize - 1 , i=0; i<this.boardSize-1; i++){
+
 			if(this.matrixCheck[i][j] !== "" && this.matrixCheck[i+1][j-1] === this.matrixCheck[i][j]) {
-				this.matchCount++;
-				
+				this.matchCount++;				
 			}
+			
 			j--;
 		}	
 
